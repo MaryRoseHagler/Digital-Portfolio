@@ -1,673 +1,739 @@
 <!doctype html>
 <html lang="en" class="h-full">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mary Rose Hagler | Portfolio</title>
-
+  <script src="/_sdk/element_sdk.js"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+        body { font-family: 'Syne', sans-serif; }
 
-    html,
-    body {
-      height: 100%;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
+        .portfolio-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6eef8 50%, #fbe7ee 100%);
+            color: #2d3748;
+        }
 
-    body {
-      font-family: "Syne", sans-serif;
-    }
+        /* 3D Glassmorphism Cards */
+        .card-3d {
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(168, 192, 235, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
 
-    .portfolio-wrapper {
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-      background: linear-gradient(
-        135deg,
-        #f0f4f8 0%,
-        #e6eef8 50%,
-        #fbe7ee 100%
-      );
-      color: #2d3748;
-    }
+        .card-3d:hover {
+            transform: translateY(-8px) translateZ(20px) rotateX(2deg) rotateY(-2deg);
+            box-shadow: 0 30px 60px rgba(244, 143, 177, 0.25), 0 0 40px rgba(142, 200, 243, 0.2);
+            border-color: rgba(244, 143, 177, 0.4);
+        }
 
-    .card-3d {
-      background: rgba(255, 255, 255, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      border-radius: 24px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 20px 40px rgba(168, 192, 235, 0.2);
-      transition: 0.4s ease;
-    }
+        /* Cool Baby Pink & Blue Glow Text */
+        .glow-text {
+            background: linear-gradient(135deg, #74b9ff, #a29bfe, #fd79a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
 
-    .card-3d:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 30px 60px rgba(244, 143, 177, 0.25);
-    }
+        /* 3D Floating Geometry Elements */
+        .particle-cube {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(116, 185, 255, 0.4), rgba(253, 121, 168, 0.4));
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 6px;
+            animation: float-cube 8s infinite ease-in-out;
+            box-shadow: 0 10px 25px rgba(168, 192, 235, 0.2);
+        }
 
-    .glow-text {
-      background: linear-gradient(135deg, #74b9ff, #a29bfe, #fd79a8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 800;
-    }
+        @keyframes float-cube {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-30px) rotate(180deg) scale(1.2); opacity: 0.9; }
+        }
 
-    .nav-link {
-      position: relative;
-      padding: 8px 16px;
-      transition: 0.3s ease;
-      font-weight: 600;
-      text-decoration: none;
-      color: #4a5568;
-    }
+        /* Hero Layout Animations */
+        .hero-title {
+            animation: title-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
 
-    .nav-link:hover {
-      color: #fd79a8;
-    }
+        @keyframes title-reveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .nav-link::after {
-      content: "";
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      width: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #74b9ff, #fd79a8);
-      border-radius: 2px;
-      transition: 0.3s ease;
-      transform: translateX(-50%);
-    }
+        /* 3D Planetary Orbit Rings */
+        .orbit-ring {
+            position: absolute;
+            border: 2px dashed rgba(116, 185, 255, 0.25);
+            border-radius: 50%;
+            animation: orbit-spin 25s linear infinite;
+            transform-style: preserve-3d;
+        }
+        .orbit-ring-pink {
+            position: absolute;
+            border: 1px solid rgba(253, 121, 168, 0.2);
+            border-radius: 50%;
+            animation: orbit-spin 18s linear infinite reverse;
+        }
 
-    .nav-link:hover::after {
-      width: 70%;
-    }
+        @keyframes orbit-spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg) rotateX(45deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) rotateX(45deg); }
+        }
 
-    .photo-frame {
-      width: 230px;
-      height: 230px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #74b9ff, #fd79a8, #81ecec);
-      padding: 6px;
-      animation: pulse 5s infinite ease-in-out;
-      box-shadow: 0 20px 50px rgba(116, 185, 255, 0.3);
-    }
+        /* 3D Pulsing Avatar Frame */
+        .photo-frame {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #74b9ff, #fd79a8, #81ecec);
+            padding: 6px;
+            animation: photo-pulse 5s ease-in-out infinite;
+            position: relative;
+            transform-style: preserve-3d;
+            box-shadow: 0 20px 50px rgba(116, 185, 255, 0.3);
+        }
 
-    .photo-frame img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-    }
+        .photo-frame-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
+        }
 
-    @keyframes pulse {
-      0%,
-      100% {
-        transform: scale(1);
-      }
+        @keyframes photo-pulse {
+            0%, 100% { transform: scale(1) translateZ(10px); box-shadow: 0 20px 40px rgba(116, 185, 255, 0.3), 0 0 40px rgba(253, 121, 168, 0.2); }
+            50% { transform: scale(1.04) translateZ(30px); box-shadow: 0 30px 60px rgba(116, 185, 255, 0.4), 0 0 60px rgba(253, 121, 168, 0.5); }
+        }
 
-      50% {
-        transform: scale(1.03);
-      }
-    }
+        /* Project Cards Styling */
+        .project-card {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(116, 185, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+        }
 
-    .project-card,
-    .cert-card {
-      background: rgba(255, 255, 255, 0.55);
-      border-radius: 20px;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      transition: 0.3s ease;
-      cursor: pointer;
-    }
+        .project-card:hover {
+            transform: translateY(-8px) rotateX(4deg);
+            border-color: rgba(253, 121, 168, 0.5);
+            box-shadow: 0 20px 35px rgba(253, 121, 168, 0.15), 0 10px 20px rgba(116, 185, 255, 0.1);
+        }
 
-    .project-card:hover,
-    .cert-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
-    }
+        
+        .project-img-container {
+            width: 100%;
+            height: 190px;
+            overflow: hidden;
+            background: #f7fafc;
+            border-bottom: 1px solid rgba(116, 185, 255, 0.15);
+            position: relative;
+        }
 
-    .project-img-container,
-    .cert-img-placeholder {
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
-      background: #f7fafc;
-    }
+        .project-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.5s ease;
+        }
 
-    .project-img-container img,
-    .cert-img-placeholder img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
+        .project-card:hover .project-img-container img {
+            transform: scale(1.05);
+        }
 
-    .project-card:hover img,
-    .cert-card:hover img {
-      transform: scale(1.05);
-    }
+        /* Certification Cards Modern grid */
+        .cert-card {
+            background: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 24px;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 8px 20px rgba(142, 200, 243, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
 
-    .skill-tag {
-      background: rgba(116, 185, 255, 0.12);
-      border: 1px solid rgba(116, 185, 255, 0.3);
-      color: #4a69bd;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
+        .cert-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, #74b9ff, #fd79a8);
+        }
 
-    .social-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 30px;
-      border: 1px solid rgba(116, 185, 255, 0.4);
-      background: rgba(255, 255, 255, 0.6);
-      color: #4a5568;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.3s ease;
-    }
+        .cert-card:hover {
+            transform: translateX(6px) scale(1.02);
+            border-color: rgba(116, 185, 255, 0.4);
+            box-shadow: 0 12px 24px rgba(116, 185, 255, 0.15);
+            background: rgba(255, 255, 255, 0.75);
+        }
 
-    .social-btn:hover {
-      background: linear-gradient(135deg, #74b9ff, #fd79a8);
-      color: white;
-      transform: translateY(-3px);
-    }
+        /* Nav Links */
+        .nav-link {
+            position: relative;
+            padding: 8px 16px;
+            transition: color 0.3s, transform 0.2s;
+            font-weight: 600;
+        }
 
-    .reveal-section {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: 0.8s ease;
-    }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #74b9ff, #fd79a8);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
 
-    .reveal-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        .nav-link:hover::after { width: 70%; }
+        .nav-link:hover { color: #fd79a8; transform: translateY(-1px); }
 
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(10px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      padding: 20px;
-    }
+        /* Scrollbar */
+        .portfolio-wrapper::-webkit-scrollbar { width: 8px; }
+        .portfolio-wrapper::-webkit-scrollbar-track { background: #f0f4f8; }
+        .portfolio-wrapper::-webkit-scrollbar-thumb { background: linear-gradient(#74b9ff, #fd79a8); border-radius: 4px; }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+        .skill-tag {
+            background: rgba(116, 185, 255, 0.12);
+            border: 1px solid rgba(116, 185, 255, 0.3);
+            color: #4a69bd;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
 
-    .modal-content {
-      background: white;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 700px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
+        .skill-tag:hover {
+            background: linear-gradient(135deg, rgba(116, 185, 255, 0.2), rgba(253, 121, 168, 0.2));
+            border-color: #fd79a8;
+            transform: scale(1.05) translateY(-1px);
+        }
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #718096;
-      font-size: 0.9rem;
-    }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 1px solid rgba(116, 185, 255, 0.4);
+            background: rgba(255, 255, 255, 0.6);
+            color: #4a5568;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(116, 185, 255, 0.1);
+        }
+
+        .social-btn:hover {
+            background: linear-gradient(135deg, #74b9ff, #fd79a8);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px) translateZ(10px);
+            box-shadow: 0 10px 20px rgba(253, 121, 168, 0.3);
+        }
+
+        /* Section Reveal Effect */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        .reveal-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal Layout Structures */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(168, 192, 235, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        /* Certificate Inline Image Container Styling */
+        .cert-img-placeholder {
+            width: 100%;
+            height: 140px;
+            margin-top: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(116, 185, 255, 0.2);
+            overflow: hidden;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: #f7fafc;
+        }
+
+        .cert-img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.5s ease;
+        }
+
+        .cert-card:hover .cert-img-placeholder {
+            border-color: rgba(253, 121, 168, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .cert-card:hover .cert-img-placeholder img {
+            transform: scale(1.04);
+        }
   </style>
-</head>
+ </head>
+ <body class="h-full">
+  <div class="portfolio-wrapper" id="portfolio">
+   
+   <div id="particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
 
-<body>
-  <div class="portfolio-wrapper">
+   <nav style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(240,244,248,0.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.6);">
+    <div style="max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;">
+     <span style="font-weight:800;font-size:1.2rem;letter-spacing:1px;" class="glow-text">MRH</span>
+     <div style="display:flex;gap:4px;">
+      <a href="#hero" class="nav-link" style="color:#4a5568;text-decoration:none;font-size:0.85rem;">Home</a> 
+      <a href="#about" class="nav-link" style="color:#4a5568;text-decoration:none;font-size:0.85rem;">About</a> 
+      <a href="#projects" class="nav-link" style="color:#4a5568;text-decoration:none;font-size:0.85rem;">Projects</a> 
+      <a href="#certs" class="nav-link" style="color:#4a5568;text-decoration:none;font-size:0.85rem;">Certifications</a> 
+      <a href="#contact" class="nav-link" style="color:#4a5568;text-decoration:none;font-size:0.85rem;">Contact</a>
+     </div>
+    </div>
+   </nav>
 
-    <!-- NAV -->
-    <nav
-      style="
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 100;
-        background: rgba(240, 244, 248, 0.8);
-        backdrop-filter: blur(18px);
-      "
-    >
-      <div
-        style="
-          max-width: 1100px;
-          margin: auto;
-          padding: 16px 24px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <span class="glow-text" style="font-size: 1.3rem">MRH</span>
-
-        <div style="display: flex; gap: 4px">
-          <a href="#hero" class="nav-link">Home</a>
-          <a href="#about" class="nav-link">About</a>
-          <a href="#projects" class="nav-link">Projects</a>
-          <a href="#certs" class="nav-link">Certifications</a>
-          <a href="#contact" class="nav-link">Contact</a>
-        </div>
+   <section id="hero" style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:120px 24px 60px;position:relative;">
+    <div class="orbit-ring" style="width:520px;height:520px;top:50%;left:50%;"></div>
+    <div class="orbit-ring-pink" style="width:680px;height:680px;top:50%;left:50%;transform: translate(-50%, -50%);"></div>
+    
+    <div style="max-width:1100px;width:100%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:50px;position:relative;z-index:1;">
+     <div style="flex:1;min-width:300px;" class="scene-3d">
+      <p style="font-family:'Space Mono',monospace;font-size:0.85rem;color:#74b9ff;margin-bottom:12px;letter-spacing:3px;font-weight:700;">WELCOME TO MY PORTFOLIO</p>
+      <h1 class="hero-title" id="heroTitle" style="font-size:clamp(2.8rem,5.5vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:18px;color:#2d3748;">
+        Mary Rose<br><span class="glow-text">Hagler</span>
+      </h1>
+      <p class="hero-subtitle" id="heroSubtitle" style="font-size:1.15rem;color:#64748b;margin-bottom:28px;line-height:1.6;font-weight:500;">Aspiring IT Professional • Web Developer • Creative Thinker</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+       <a href="https://github.com/MaryRoseHagler/MaryRoseHagler" target="_blank" rel="noopener noreferrer" class="social-btn"><i data-lucide="github" style="width:18px;height:18px;"></i>GitHub</a> 
+       <a href="https://linkedin.com/in/mrhagler17/" target="_blank" rel="noopener noreferrer" class="social-btn"><i data-lucide="linkedin" style="width:18px;height:18px;"></i>LinkedIn</a>
       </div>
-    </nav>
-
-    <!-- HERO -->
-    <section
-      id="hero"
-      style="
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 120px 24px 60px;
-      "
-    >
-      <div
-        style="
-          max-width: 1100px;
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: space-between;
-          gap: 60px;
-        "
-      >
-        <div style="flex: 1; min-width: 300px">
-          <p
-            style="
-              font-family: 'Space Mono', monospace;
-              color: #74b9ff;
-              letter-spacing: 3px;
-              margin-bottom: 12px;
-              font-size: 0.85rem;
-            "
-          >
-            WELCOME TO MY PORTFOLIO
-          </p>
-
-          <h1
-            style="
-              font-size: clamp(3rem, 6vw, 5rem);
-              font-weight: 800;
-              line-height: 1.1;
-              margin-bottom: 18px;
-            "
-          >
-            Mary Rose <br />
-            <span class="glow-text">Hagler</span>
-          </h1>
-
-          <p
-            style="
-              color: #64748b;
-              font-size: 1.1rem;
-              line-height: 1.7;
-              margin-bottom: 30px;
-            "
-          >
-            Aspiring IT Professional • Web Developer • Creative Thinker
-          </p>
-
-          <div style="display: flex; gap: 16px; flex-wrap: wrap">
-            <a
-              href="https://github.com/MaryRoseHagler/MaryRoseHagler"
-              target="_blank"
-              class="social-btn"
-            >
-              <i data-lucide="github"></i>
-              GitHub
-            </a>
-
-            <a
-              href="https://linkedin.com/in/mrhagler17/"
-              target="_blank"
-              class="social-btn"
-            >
-              <i data-lucide="linkedin"></i>
-              LinkedIn
-            </a>
-          </div>
-        </div>
-
-        <div class="photo-frame">
-          <img src="images/Ramona2.jpeg" alt="Mary Rose Hagler" />
-        </div>
+     </div>
+     <div style="position:relative; display:flex; justify-content:center; flex-grow:1; max-width:400px;">
+      <div class="photo-frame" style="width:220px;height:220px;">
+       <div class="photo-frame-placeholder"> <img src="images/Ramona2.jpeg" alt="Mary Rose Hagler" style="width:100%; height:100%; display:block; border-radius:50%; object-fit:cover;">
       </div>
-    </section>
+     </div>
+    </div>
+   </section>
 
-    <!-- ABOUT -->
-    <section id="about" style="padding: 90px 24px">
-      <div class="reveal-section" style="max-width: 1100px; margin: auto">
-        <div class="card-3d" style="padding: 45px">
-          <p
-            style="
-              font-family: 'Space Mono', monospace;
-              color: #fd79a8;
-              letter-spacing: 2px;
-              margin-bottom: 10px;
-            "
-          >
-            ABOUT ME
-          </p>
-
-          <h2
-            style="
-              font-size: 2.4rem;
-              margin-bottom: 20px;
-              font-weight: 800;
-            "
-          >
-            Who I Am
-          </h2>
-
-          <p
-            style="
-              color: #4a5568;
-              line-height: 1.9;
-              margin-bottom: 28px;
-            "
-          >
-            Results-driven Information Technology student specializing in
-            modern web architectures and frontend design.
-          </p>
-
-          <div style="display: flex; flex-wrap: wrap; gap: 10px">
-            <span class="skill-tag">HTML/CSS</span>
-            <span class="skill-tag">JavaScript</span>
-            <span class="skill-tag">React</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">UI/UX Design</span>
-            <span class="skill-tag">Figma</span>
-          </div>
-        </div>
+   <section id="about" style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:90px 24px;">
+    <div class="reveal-section" style="max-width:1100px;width:100%;">
+     <div class="card-3d" style="padding:45px;">
+      <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:#fd79a8;letter-spacing:2px;margin-bottom:10px;font-weight:700;">ABOUT ME</p>
+      <h2 style="font-size:2.2rem;font-weight:800;margin-bottom:22px;color:#1a202c;">Who I Am</h2>
+      <p id="aboutText" style="color:#4a5568;line-height:1.9;margin-bottom:28px;font-size:1.05rem;">Results-driven Information Technology student specializing in modern web architectures and frontend design. Combines a strong foundation in cloud infrastructures, database design, and data analytics with a passion for building highly responsive, user-centric applications.</p>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;background:rgba(255,255,255,0.5);padding:12px 20px;border-radius:14px;width:fit-content;border:1px solid rgba(255,255,255,0.7);">
+       <i data-lucide="graduation-cap" style="width:22px;height:22px;color:#74b9ff;"></i> 
+       <span style="color:#4a5568;font-weight:600;">New Era University — BS Information Technology</span>
       </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" style="padding: 90px 24px">
-      <div class="reveal-section" style="max-width: 1100px; margin: auto">
-        <h2
-          style="
-            font-size: 2.4rem;
-            font-weight: 800;
-            margin-bottom: 35px;
-          "
-        >
-          Featured Projects
-        </h2>
-
-        <div
-          style="
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-          "
-        >
-          <div class="project-card">
-            <div class="project-img-container">
-              <img src="images/AirveEcom.png" alt="Ecommerce Preview" />
-            </div>
-
-            <div style="padding: 24px">
-              <h3 style="font-size: 1.2rem; font-weight: 800">
-                E-Commerce Website
-              </h3>
-
-              <p style="color: #64748b; margin-top: 10px">
-                Full-stack online store with elegant responsive structure.
-              </p>
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-img-container">
-              <img src="images/musicapreview.png" alt="Music App Preview" />
-            </div>
-
-            <div style="padding: 24px">
-              <h3 style="font-size: 1.2rem; font-weight: 800">
-                Music Streaming Website
-              </h3>
-
-              <p style="color: #64748b; margin-top: 10px">
-                Modern music streaming interface and playlist system.
-              </p>
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-img-container">
-              <img
-                src="images/TalktomyLawyercover.png"
-                alt="Lawyer App Preview"
-              />
-            </div>
-
-            <div style="padding: 24px">
-              <h3 style="font-size: 1.2rem; font-weight: 800">
-                Talk to my Lawyer
-              </h3>
-
-              <p style="color: #64748b; margin-top: 10px">
-                Legal consultation portal with secure communication.
-              </p>
-            </div>
-          </div>
-        </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+       <span class="skill-tag">HTML/CSS</span> <span class="skill-tag">JavaScript</span> <span class="skill-tag">React</span> <span class="skill-tag">Python</span> <span class="skill-tag">UI/UX Design</span> <span class="skill-tag">Git</span> <span class="skill-tag">Figma</span>
       </div>
-    </section>
+     </div>
+    </div>
+   </section>
 
-    <!-- CERTIFICATIONS -->
-    <section id="certs" style="padding: 90px 24px">
-      <div class="reveal-section" style="max-width: 1100px; margin: auto">
-        <h2
-          class="glow-text"
-          style="
-            font-size: 2.5rem;
-            margin-bottom: 35px;
-            font-weight: 800;
-          "
-        >
-          Certifications & Achievements
-        </h2>
-
-        <div
-          style="
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 22px;
-          "
-        >
-          <div class="cert-card">
-            <div class="cert-img-placeholder">
-              <img
-                src="images/DigitalAnalytics&Regression_cert.jpeg"
-                alt="Digital Analytics"
-              />
-            </div>
-
-            <div style="padding: 24px">
-              <h3 style="font-size: 1.1rem; font-weight: 700">
-                Digital Analytics & Regression
-              </h3>
-
-              <p style="color: #64748b; margin-top: 10px">
-                Analytics frameworks and regression methodologies.
-              </p>
-            </div>
-          </div>
-
-          <div class="cert-card">
-            <div class="cert-img-placeholder">
-              <img
-                src="images/SQLandRelationalDatabases101.png"
-                alt="SQL Certification"
-              />
-            </div>
-
-            <div style="padding: 24px">
-              <h3 style="font-size: 1.1rem; font-weight: 700">
-                SQL and Relational Databases 101
-              </h3>
-
-              <p style="color: #64748b; margin-top: 10px">
-                Relational databases and SQL syntax fundamentals.
-              </p>
-            </div>
-          </div>
-
-          <div class="cert-card">
-            <div class="cert-img-placeholder">
-              <img
-                src="images/OracleCloudInfrastructureFoundations.png"
-                alt="Oracle Certification"
-              />
-            </div>
-
-            <div style="padding: 24px">
-              <h3 style="font-size: 1.1rem; font-weight: 700">
-                Oracle Cloud Infrastructure Foundations
-              </h3>
-
-              <p style="color: #64748b; margin-top: 10px">
-                Cloud architecture and infrastructure management.
-              </p>
-            </div>
-          </div>
+   <section id="projects" style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:90px 24px;">
+    <div class="reveal-section" style="max-width:1100px;width:100%;">
+     <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:#74b9ff;letter-spacing:2px;margin-bottom:10px;font-weight:700;">MY WORK</p>
+     <h2 style="font-size:2.2rem;font-weight:800;margin-bottom:35px;color:#1a202c;">Featured Projects</h2>
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;">
+      
+      <div class="project-card" onclick="openModal(0)">
+       <div class="project-img-container">
+         <img src="images/AirveEcom.png" alt="E-Commerce Website Preview">
+       </div>
+       <div style="padding:24px; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <h3 style="font-weight:800;margin-bottom:8px;font-size:1.15rem;color:#2d3748;">E-Commerce Website</h3>
+          <p style="color:#64748b;font-size:0.9rem;line-height:1.5;">Full-stack online store with elegant aesthetic, responsive structure cart &amp; checkout integrations.</p>
         </div>
+       </div>
       </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" style="padding: 90px 24px">
-      <div class="reveal-section" style="max-width: 1100px; margin: auto">
-        <div class="card-3d" style="padding: 50px; text-align: center">
-          <p
-            style="
-              font-family: 'Space Mono', monospace;
-              color: #fd79a8;
-              letter-spacing: 3px;
-              margin-bottom: 14px;
-            "
-          >
-            LET'S CONNECT
-          </p>
-
-          <h2
-            style="
-              font-size: 2.6rem;
-              font-weight: 800;
-              margin-bottom: 20px;
-            "
-          >
-            Let's Build Something Together
-          </h2>
-
-          <p
-            style="
-              color: #5a6578;
-              max-width: 650px;
-              margin: auto;
-              line-height: 1.8;
-              margin-bottom: 30px;
-            "
-          >
-            Open for internship opportunities, collaborations, and innovative
-            tech projects.
-          </p>
-
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              gap: 16px;
-              flex-wrap: wrap;
-            "
-          >
-            <a
-              href="https://linkedin.com/in/mrhagler17/"
-              target="_blank"
-              class="social-btn"
-            >
-              <i data-lucide="linkedin"></i>
-              LinkedIn
-            </a>
-
-            <a
-              href="https://github.com/MaryRoseHagler/MaryRoseHagler"
-              target="_blank"
-              class="social-btn"
-            >
-              <i data-lucide="github"></i>
-              GitHub
-            </a>
-          </div>
+      
+      <div class="project-card" onclick="openModal(1)">
+       <div class="project-img-container">
+         <img src="images/musicapreview.png" alt="Music Streaming Website Preview">
+       </div>
+       <div style="padding:24px; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <h3 style="font-weight:800;margin-bottom:8px;font-size:1.15rem;color:#2d3748;">Music Streaming Website</h3>
+          <p style="color:#64748b;font-size:0.9rem;line-height:1.5;">Modern web application for streaming music with a sleek interface and personalized playlists.</p>
         </div>
+       </div>
       </div>
-    </section>
 
-    <footer>
-      © 2026 Mary Rose Hagler. Built with passion.
-    </footer>
+      <div class="project-card" onclick="openModal(2)">
+       <div class="project-img-container">
+         <img src="images/TalktomyLawyercover.png" alt="Talk to my Lawyer Preview">
+       </div>
+       <div style="padding:24px; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <h3 style="font-weight:800;margin-bottom:8px;font-size:1.15rem;color:#2d3748;">Talk to my Lawyer App</h3>
+          <p style="color:#64748b;font-size:0.9rem;line-height:1.5;">On-demand legal consultation portal connecting users directly to legal professionals safely.</p>
+        </div>
+       </div>
+      </div>
+
+     </div>
+    </div>
+   </section>
+
+   <section id="certs" style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:90px 24px;">
+    <div class="reveal-section" style="max-width:1100px;width:100%;">
+     <p style="font-family:'Space Mono',monospace;font-size:0.85rem;color:#4a69bd;letter-spacing:3px;margin-bottom:6px;font-weight:700;">CHAPTER 3: SEMINARS AND TRAININGS</p>
+     <h2 style="font-size:2.4rem;font-weight:800;margin-bottom:35px;color:#1a202c;" class="glow-text">Certifications &amp; Achievements</h2>
+     
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+      
+      <div class="cert-card" onclick="openCertModal('Digital Analytics & Regression', 'Analytics Frameworks Certification', 'images/DigitalAnalytics&Regression_cert.jpeg')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">Digital Analytics &amp; Regression</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Analytics</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">Core understanding of descriptive data architectures, linear applications, modeling variants, and regression frameworks.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/DigitalAnalytics&Regression_cert.jpeg" alt="Digital Analytics Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('SQL and Relational Databases 101', 'Database Architecture Syntax', 'images/SQLandRelationalDatabases101.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">SQL and Relational Databases 101</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Database</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">Relational logic constraints, queries structure, table manipulation syntax, schema optimization, and structural architectures basics.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/SQLandRelationalDatabases101.png" alt="SQL 101 Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('Big Data Applications', 'Cloud Data Scale Infrastructures', 'images/BigDataApplications.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">Big Data Applications</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Big Data</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">Scale metrics methodologies, cloud distribution tools infrastructure, data pipelines processing configurations, and analytical environments tools.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/BigDataApplications.png" alt="Big Data Applications Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('Analytics 101 for Business', 'Corporate Decision KPIs Implementation', 'images/Analytics101forBusiness.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">Analytics 101 for Business</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Business</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">Strategic metrics translation models, core decision-making pipelines mapping, standard reporting KPIs, and insight visualizations implementation.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/Analytics101forBusiness.png" alt="Business Analytics Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('Gemini Certified Student', 'AI Engineering Context Prompts Application', 'images/GeminiCertifiedStudent.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">Gemini Certified Student</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">AI Mastery</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">AI engineering application patterns, system optimization, logical contextual prompt constructs, and foundational large language models interaction.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/GeminiCertifiedStudent.png" alt="Gemini Certification Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('Big Data 101', 'CognitiveClass.ai | IBM Developer Network', 'images/BigDataApplications.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">Big Data 101</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">CognitiveClass.ai</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">CognitiveClass.ai | IBM Developer Skills Network (February 2026). Foundational core properties mapping standard enterprise data scale limits.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/BigDataApplications.png" alt="Big Data 101 Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('Quantum-Safe Encryption Essentials', 'IBM Badge Certification Document', 'images/QuantumSafeEncrytionEssentials.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">Quantum-Safe Encryption Essentials</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Badge Certification</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">IBM (Issued: February 20, 2026). Modern lattice-based algorithm tracking structures and post-quantum computational vulnerability reduction rules.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/QuantumSafeEncrytionEssentials.png" alt="Quantum Encryption Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('Oracle Cloud Infrastructure Foundations', 'Oracle | Coursera Global Badge', 'images/OracleCloudInfrastructureFoundations.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">Oracle Cloud Infrastructure Foundations</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Oracle | Coursera</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">Oracle | Coursera (February 2026). Implementation workflows for core structural networks, identity management configurations, and computing resources allocation.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/OracleCloudInfrastructureFoundations.png" alt="OCI Foundations Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('OCI 2023 Certified Foundations Associate', 'Oracle Technical Credentials Portal', 'images/Oracle Cloud Infrastructure2023AICertifiedFoundationsAssociate.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">OCI 2023 Certified Foundations Associate</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Oracle</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">Oracle | (November 2023). Validation of platform cloud tool architectures mapping global networks infrastructures, storage rules, security monitoring systems.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/Oracle Cloud Infrastructure2023AICertifiedFoundationsAssociate.png" alt="OCI Associate Preview">
+       </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertModal('OCI 2023 AI Certified Foundations Associate', 'Oracle Machine Learning Credentials', 'images/OracleCloudInfrastructure2023AICertifiedFoundationsAssociate.png')">
+       <div style="display:flex;justify-content:space-between;align-items:start;width:100%;">
+        <h3 style="font-weight:700;font-size:1.05rem;color:#2d3748;flex-grow:1;">OCI 2023 AI Certified Foundations Associate</h3>
+        <span style="font-size:0.75rem;background:#e2e8f0;padding:2px 8px;border-radius:12px;font-weight:700;color:#4a5568;">Oracle</span>
+       </div>
+       <p style="color:#64748b;font-size:0.85rem;line-height:1.6;">Oracle | (December 2023). Deep structures within Machine Learning models, anomaly detection tool pipelines integration, conversational bots configurations, natural language architectures.</p>
+       <div class="cert-img-placeholder">
+         <img src="images/OracleCloudInfrastructure2023AICertifiedFoundationsAssociate.png" alt="OCI AI Preview">
+       </div>
+      </div>
+
+     </div>
+    </div>
+   </section>
+
+   <section id="contact" style="min-height:80%;display:flex;align-items:center;justify-content:center;padding:90px 24px;">
+    <div class="reveal-section" style="max-width:1100px;width:100%;text-align:center;">
+     <div class="card-3d" style="padding:50px 30px; display:flex; flex-direction:column; align-items:center; gap:20px;">
+      <p style="font-family:'Space Mono',monospace;font-size:0.85rem;color:#fd79a8;letter-spacing:3px;font-weight:700;">LET'S BUILD SOMETHING TOGETHER</p>
+      <h2 style="font-size:2.6rem;font-weight:800;color:#1a202c;line-height:1.2;">Let's Connect &amp; Innovate</h2>
+      <p style="color:#5a6578;max-width:650px;font-size:1.05rem;line-height:1.8;margin-bottom:10px;">
+        Whether you are looking for a dedicated technical collaborator, want to discuss modern web development, or just want to expand your professional IT circle—my inbox is always open. Let’s start a conversation!
+      </p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px;">
+       <a href="https://linkedin.com/in/mrhagler17/" target="_blank" rel="noopener noreferrer" class="social-btn" style="padding:14px 32px; font-size:0.95rem;">
+         <i data-lucide="linkedin" style="width:20px;height:20px;color:#0077b5;"></i>Connect on LinkedIn
+       </a>
+       <a href="https://github.com/MaryRoseHagler/MaryRoseHagler" target="_blank" rel="noopener noreferrer" class="social-btn" style="padding:14px 32px; font-size:0.95rem;">
+         <i data-lucide="github" style="width:20px;height:20px;color:#333;"></i>Follow on GitHub
+       </a>
+      </div>
+      <p style="font-size:0.85rem; color:#8a95a5; font-family:'Space Mono', monospace; margin-top:15px;">Available for internship opportunities &amp; collaborative projects</p>
+     </div>
+    </div>
+   </section>
+
+   <footer style="text-align:center;padding:35px 24px;border-top:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.3);">
+    <p style="color:#718096;font-size:0.85rem;font-weight:600;">© 2026 Mary Rose Hagler. Built with passion.</p>
+   </footer>
   </div>
 
-  <!-- MODAL -->
   <div class="modal-overlay" id="projectModal">
-    <div class="modal-content" id="modalContent"></div>
+   <div class="modal-content" id="modalContent"></div>
   </div>
 
   <script>
-    function initScrollReveal() {
-      const sections = document.querySelectorAll(".reveal-section");
+        // Projects Datasets upgraded to support mp4 stream recordings or live figma links
+        const projects = [
+            {
+                title: "E-Commerce Website",
+                tech: ["HTML/CSS", "JavaScript", "Node.js", "MongoDB"],
+                description: "A fully responsive online store featuring user authentication, shopping cart functionality, secure checkout with Stripe integration, and an admin dashboard for inventory management. Built with a focus on performance and accessibility.",
+                features: ["User registration & login", "Product search & filtering", "Shopping cart & wishlist", "Secure payment processing", "Order tracking"],
+                mediaType: "video",
+                mediaSrc: "images/AirveEcom_clip.mp4" 
+            },
+            {
+                title: "Music Streaming Website",
+                tech: ["Figma"],
+                description: "A mobile-first productivity application that helps users organize tasks with smart reminders, priority levels, and collaborative project boards. Features real-time sync across devices and offline support.",
+                features: ["Drag & drop task organization", "Smart notifications", "Team collaboration", "Progress analytics", "Dark/light theme"],
+                mediaType: "figma",
+                mediaSrc: "https://www.figma.com/design/LanL9G89pDo6MlVZeRcDND/Music-Streaming-Website---App--MUSICA?node-id=0-1&t=dcSbGNWSGr5AgYIZ-1"
+            },
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
+            {
+                title: "Talk to my Lawyer App",
+                tech: ["React", "Firebase", "Socket.io", "TailwindCSS"],
+                description: "An on-demand premium digital environment built to bridge clients securely with legal professionals globally. Features secure high-definition instant messaging layouts and end-to-end encrypted video channels.",
+                features: ["Real-time messaging channels", "Encrypted video call portals", "Document sharing capabilities", "Legal consultant directory listing"],
+                mediaType: "figma",
+                mediaSrc: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FYourSecondFigmaLinkHere"
             }
-          });
-        },
-        {
-          threshold: 0.1,
+        ];
+
+        // Handles Project Previews Modals dynamically injection video loops or figma frames
+        function openModal(index) {
+            const modal = document.getElementById('projectModal');
+            const content = document.getElementById('modalContent');
+            const data = projects[index];
+            
+            let mediaHTML = '';
+            if (data.mediaType === "video") {
+                mediaHTML = `
+                    <div style="margin-top:15px; margin-bottom:20px; border-radius:14px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.06); background:#000;">
+<video controls autoplay loop muted style="width:100%; height:auto; display:block;">
+    <source src="${data.mediaSrc}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+                    </div>
+                `;
+            } else if (data.mediaType === "figma") {
+                mediaHTML = `
+                    <div style="margin-top:15px; margin-bottom:20px; border-radius:14px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.06); position:relative; padding-bottom:56.25%; height:0; background:#f3f4f6;">
+                        <iframe src="${data.mediaSrc}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen="true"></iframe>
+                    </div>
+                `;
+            }
+            
+            content.innerHTML = `
+                <div style="padding:32px;">
+                    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;">
+                        <div>
+                            <h2 style="font-size:1.6rem;font-weight:800;color:#2d3748;margin-bottom:6px;">${data.title}</h2>
+                            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                                ${data.tech.map(t => `<span style="font-size:0.75rem;background:rgba(116,185,255,0.15);color:#4a69bd;padding:2px 10px;border-radius:12px;font-weight:600;">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                        <button onclick="closeModal()" style="background:none;border:none;color:#a0aec0;cursor:pointer;font-size:2rem;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#fd79a8'" onmouseout="this.style.color='#a0aec0'">&times;</button>
+                    </div>
+                    
+                    ${mediaHTML}
+                    
+                    <p style="color:#4a5568;line-height:1.7;margin-bottom:24px;font-size:0.95rem;">${data.description}</p>
+                    <h4 style="font-weight:700;color:#2d3748;margin-bottom:12px;font-size:0.95rem;">Key Features:</h4>
+                    <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:8px;">
+                        ${data.features.map(f => `<li style="color:#64748b;font-size:0.9rem;display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;background:#fd79a8;border-radius:50%;flex-shrink:0;"></span>${f}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            modal.classList.add('active');
         }
-      );
 
-      sections.forEach((section) => observer.observe(section));
-    }
+        // Dynamically launches specific large image file inside popup overlay
+        function openCertModal(certTitle, certMeta, imgSrc) {
+            const modal = document.getElementById('projectModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <div style="padding:32px; text-align:center;">
+                    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:15px;">
+                        <div style="text-align:left;">
+                            <h2 style="font-size:1.4rem;font-weight:800;color:#2d3748;">${certTitle}</h2>
+                            <p style="color:#a29bfe; font-size:0.85rem; font-weight:600;">${certMeta}</p>
+                        </div>
+                        <button onclick="closeModal()" style="background:none;border:none;color:#a0aec0;cursor:pointer;font-size:2rem;line-height:1;">&times;</button>
+                    </div>
+                    <div style="width:100%; border-radius:16px; overflow:hidden; box-shadow:0 15px 35px rgba(168,192,235,0.25); background:#f7fafc;">
+                        <img src="${imgSrc}" alt="${certTitle}" style="width:100%; height:auto; display:block;" onerror="this.onerror=null; this.parentNode.innerHTML='<div style=\'padding:40px;color:#a0aec0;\'>⚠️ Unable to load image file: <br><b style=\'color:#4a5568;\'>${imgSrc}</b><br><span style=\'font-size:0.8rem;\'>Verify that this file name matches your file folder layout precisely.</span></div>';" />
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+        }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      initScrollReveal();
+        function closeModal() {
+            document.getElementById('projectModal').classList.remove('active');
+        }
 
-      if (typeof lucide !== "undefined") {
-        lucide.createIcons();
-      }
-    });
+        // Particle generation script logic
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 12;
+            for(let i=0; i<particleCount; i++) {
+                const cube = document.createElement('div');
+                cube.className = 'particle-cube';
+                const size = Math.random() * 25 + 15;
+                cube.style.width = `${size}px`;
+                cube.style.height = `${size}px`;
+                cube.style.left = `${Math.random() * 100}%`;
+                cube.style.top = `${Math.random() * 100}%`;
+                cube.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(cube);
+            }
+        }
+
+        // Scroll Reveal logic
+        function initScrollReveal() {
+            const sections = document.querySelectorAll('.reveal-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(s => observer.observe(s));
+            setTimeout(() => { if(sections[0]) sections[0].classList.add('visible'); }, 200);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            initScrollReveal();
+            if(typeof lucide !== 'undefined') { lucide.createIcons(); }
+        });
   </script>
-</body>
+ </body>
 </html>
